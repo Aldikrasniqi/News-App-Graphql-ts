@@ -1,7 +1,15 @@
 import React from 'react';
-import Stories from './Stories';
 import { gql } from 'urql';
-import { Provider as UrqlProvider, createClient,debugExchange, cacheExchange, fetchExchange } from 'urql';
+import {
+  Provider as UrqlProvider,
+  createClient,
+  debugExchange,
+  cacheExchange,
+  fetchExchange,
+} from 'urql';
+import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
+import BottomTabs from './src/screens/BottomTabs.navigator';
 
 
 const client = createClient({
@@ -10,10 +18,12 @@ const client = createClient({
 });
 
 export default function App() {
-  
   return (
     <UrqlProvider value={client}>
-      <Stories />
+      <NavigationContainer>
+        <StatusBar hidden />
+        <BottomTabs />
+      </NavigationContainer>
     </UrqlProvider>
   );
 }

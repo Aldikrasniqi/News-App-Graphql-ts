@@ -19,13 +19,17 @@ const STORIES_QUERY = gql`
   }
 `;
 
-export default function Stories() {
+export default function HomeScreen() {
   const [{ data, error, fetching }] = useQuery({ query: STORIES_QUERY });
 
   if (fetching) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator
+          size="large"
+          color="#0000ff"
+          style={styles.container_indicator}
+        />
       </View>
     );
   }
@@ -54,13 +58,20 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     // backgroundColor: '#fff',
-    marginTop: 50,
+    marginTop: 0,
   },
   container_item: {
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     margin: 5,
+  },
+  container_indicator: {
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontSize: 20,
