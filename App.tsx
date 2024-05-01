@@ -10,6 +10,7 @@ import {
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabs from './src/screens/BottomTabs.navigator';
+import { RootNavigator } from './src/screens/Root.navigator';
 
 
 const client = createClient({
@@ -22,7 +23,7 @@ export default function App() {
     <UrqlProvider value={client}>
       <NavigationContainer>
         <StatusBar hidden />
-        <BottomTabs />
+        <RootNavigator />
       </NavigationContainer>
     </UrqlProvider>
   );

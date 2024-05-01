@@ -5,8 +5,18 @@ import {
   Text,
   View,
   ScrollView,
+  Pressable,
+  FlatList,
 } from 'react-native';
 import { gql, useQuery } from 'urql';
+import { useNavigation } from '@react-navigation/native';
+import {
+  AllstoriesQuery,
+  AllstoriesQueryVariables,
+} from '../graphql/__generated__/operationTypes';
+
+import { RootStackParamList } from '../types/types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const STORIES_QUERY = gql`
   query Allstories {
@@ -20,7 +30,14 @@ const STORIES_QUERY = gql`
 `;
 
 export default function HomeScreen() {
-  const [{ data, error, fetching }] = useQuery({ query: STORIES_QUERY });
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [{ data, error, fetching }] = useQuery<
+    AllstoriesQuery,
+    AllstoriesQueryVariables
+  >({
+    query: STORIES_QUERY,
+  });
 
   if (fetching) {
     return (
@@ -42,22 +59,33 @@ export default function HomeScreen() {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      {data.stories.map((story: any) => (
-        <View style={styles.container_item} key={story.id}>
-          <Text style={styles.title}>{story.title}</Text>
-          <Text style={styles.author}>{story.author}</Text>
-          <Text style={styles.summary}>{story.summary}</Text>
-        </View>
-      ))}
-    </ScrollView>
+    <FlatList
+      contentContainerStyle={styles.container}
+      data={data?.stories}
+      keyExtractor={(item) => item.id}
+      style={styles.container}
+      ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+      renderItem={({ item }) => (
+        <Pressable
+          style={styles.container_item}
+          onPress={() =>
+            navigation.navigate('StoryDetails', {
+              storyId: item.id,
+              title: item.title,
+            })
+          }
+        >
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.author}>{item.author}</Text>
+          <Text style={styles.summary}>{item.summary}</Text>
+        </Pressable>
+      )}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // backgroundColor: '#fff',
     marginTop: 0,
   },
   container_item: {

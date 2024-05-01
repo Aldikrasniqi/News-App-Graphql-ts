@@ -6,11 +6,16 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "generate:gql:schema": "graphql-codegen --config ./codegen.schema.yml",
+    "generate:gql:types": "graphql-codegen --config ./codegen.types.yml",
+    "postinstall": "npm run generate:gql:types",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
+    "@react-navigation/native-stack": "^6.9.26",
     "expo": "~50.0.14",
     "expo-status-bar": "~1.11.1",
     "graphql": "^15.8.0",
@@ -22,9 +27,16 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/client-preset": "4.2.5",
+    "@graphql-codegen/introspection": "4.0.3",
+    "@graphql-codegen/typescript": "^4.0.6",
+    "@graphql-codegen/typescript-operations": "^4.2.0",
+    "@parcel/watcher": "^2.4.1",
     "@types/react": "~18.2.45",
     "@types/react-native": "^0.73.0",
-    "typescript": "^5.1.3"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   },
   "private": true
 }

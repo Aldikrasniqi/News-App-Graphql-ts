@@ -33,3 +33,8 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# generated files
+src/graphql/__generated__/
+!src/graphql/__generated__/.gitkeep
+src/gql
